@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { UserInfoButton } from '../components/UserInfoButton';
 import { DownloadIcon } from '../components/DownloadIcon';
 import { D3Chart } from '../components/D3Chart';
@@ -29,7 +30,11 @@ export const HomePage: React.FC = () => {
         <h2 className="text-xl font-semibold mb-2">D3 Chart</h2>
         <D3Chart data={chartData} />
       </div>
-      {/* 其他原有的页面内容 */}
+      <div className="mb-4">
+        <Link to="/list" className="text-blue-500 hover:underline">
+          Go to List Page
+        </Link>
+      </div>
     </div>
   );
 };

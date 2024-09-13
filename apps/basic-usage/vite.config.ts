@@ -9,6 +9,6 @@ export default defineConfig({
     postcss: './postcss.config.js',
   },
   optimizeDeps: {
-    include: ['d3'],
+    include: ['d3', 'antd', '@ant-design/icons'],
   },
 })

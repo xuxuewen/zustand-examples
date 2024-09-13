@@ -16,7 +16,7 @@ export function LoginPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/home')
+      navigate('/')
     }
   }, [isLoggedIn, navigate])
 
@@ -24,6 +24,7 @@ export function LoginPage() {
     try {
       await login(values.username)
       message.success('Login successful')
+      navigate('/')
     } catch (err) {
       setError('Login failed. Please try again.')
       message.error('Login failed')

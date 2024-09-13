@@ -1,7 +1,8 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Typography } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useAuthStore } from './store'
-import './App.css'
 
 const { Title } = Typography
 
@@ -11,32 +12,27 @@ interface LoginFormValues {
 }
 
 function App() {
-  const { isLoggedIn, username, login, logout, isLoading } = useAuthStore()
+  const { isLoggedIn, login, isLoading } = useAuthStore()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/user-info')
+    }
+  }, [isLoggedIn, navigate])
 
   const onFinish = async (values: LoginFormValues) => {
     await login(values.username)
   }
 
-  if (isLoggedIn) {
-    return (
-      <div className="app-container">
-        <div className="login-form-container">
-          <Title level={2}>Welcome, {username}!</Title>
-          <Button onClick={logout}>Logout</Button>
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div className="app-container">
-      <div className="login-form-container">
-        <Title level={2} className="login-title">Login</Title>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <Title level={2} className="text-center mb-6">Login</Title>
         <Form
           name="login"
           onFinish={onFinish}
           layout="vertical"
-          className="login-form"
         >
           <Form.Item
             name="username"
@@ -51,7 +47,7 @@ function App() {
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-button" loading={isLoading}>
+            <Button type="primary" htmlType="submit" className="w-full" loading={isLoading}>
               Log in
             </Button>
           </Form.Item>

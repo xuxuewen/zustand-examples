@@ -1,13 +1,22 @@
 import { create } from 'zustand'
 
-interface CounterState {
-  count: number
-  increment: () => void
-  decrement: () => void
+interface AuthState {
+  isLoggedIn: boolean
+  username: string
+  isLoading: boolean
+  login: (username: string) => Promise<void>
+  logout: () => void
 }
 
-export const useCounterStore = create<CounterState>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
+export const useAuthStore = create<AuthState>((set) => ({
+  isLoggedIn: false,
+  username: '',
+  isLoading: false,
+  login: async (username) => {
+    set({ isLoading: true })
+    // 模拟异步登录过程
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    set({ isLoggedIn: true, username, isLoading: false })
+  },
+  logout: () => set({ isLoggedIn: false, username: '' }),
 }))
